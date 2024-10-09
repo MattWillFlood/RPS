@@ -40,12 +40,13 @@ User_IP.addEventListener("change", () => {
                  break;
           }
     }
+    User_IP.value = "";
+
 });
 
 
 function getComputerChoice() {
     let Guess2 = Math.floor(3*Math.random())
-
     switch (Guess2) {
         case 0:
             return 'Rock';
@@ -55,4 +56,3 @@ function getComputerChoice() {
             return 'Scissors';
     } 
 }
-
