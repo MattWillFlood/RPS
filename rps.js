@@ -5,19 +5,21 @@ function log(text, Choice) {
 }
 
 const Comp_choice = document.getElementById("log2");
-function printer(text, idhash) {
-    idhash.innerHTML = text;
-}
-
 const result = document.getElementById("log3");
+const U1 = document.getElementById("U1");
+const C1 = document.getElementById("C1");
+
 function output(text, idhash2) {
     idhash2.innerHTML = text;
 }
 
+let User_score = 0;
+let Comp_score = 0;
+
 User_IP.addEventListener("change", () => {
     Comp_IP = getComputerChoice();
     log(`You played ${User_IP.value}`, User_choice);
-    printer(`Computer played ${Comp_IP}`, Comp_choice);
+    output(`Computer played ${Comp_IP}`, Comp_choice);
 
     if (User_IP.value == Comp_IP) {
         output("They are the same.\nNobody wins", result)
@@ -25,23 +27,24 @@ User_IP.addEventListener("change", () => {
         switch (User_IP.value) {
             case 'Rock':
                 (Comp_IP == 'Paper' ? 
-                    output("Paper beats Rock.\nComputer wins!", result) : 
-                    output("Rock beats Scissors.\nUser wins!", result))
+                    (output("Paper beats Rock.\nComputer wins!", result), Comp_score++) : 
+                    (output("Rock beats Scissors.\nUser wins!", result), User_score++))
                 break;
              case 'Paper':
                 (Comp_IP == 'Rock' ? 
-                    output("Paper beats Rock.\nUser wins!", result) : 
-                    output("Scissors beats Paper.\nComputer wins!", result))  
+                    (output("Paper beats Rock.\nUser wins!", result), User_score++) : 
+                    (output("Scissors beats Paper.\nComputer wins!", result), Comp_score++))
                 break;
              case 'Scissors':
                 (Comp_IP == 'Paper' ? 
-                    output("Scissors beats Paper.\nUser wins!", result) : 
-                    output("Rock beats Scissors.\nComputer wins!", result))  
+                    (output("Scissors beats Paper.\nUser wins!", result), User_score++) : 
+                    (output("Rock beats Scissors.\nComputer wins!", result), Comp_score++) )
                  break;
           }
     }
     User_IP.value = "";
-
+    output(`User score:   ${User_score}`, U1);
+    output(`Computer score:   ${Comp_score}`, C1)
 });
 
 
