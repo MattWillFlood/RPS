@@ -3,30 +3,28 @@ const ROCK = document.createElement('button');
 const PAPER = document.createElement('button');
 const SCISSORS = document.createElement('button');
 const output = document.createElement('p');
-let COMP_score = document.createElement("p")
-let USER_score = document.createElement("p")
+const COMP_score = document.createElement("p")
+const USER_score = document.createElement("p")
+
+let c_score = 0;
+let u_score = 0;
 
 ROCK.textContent = 'ROCK'
 PAPER.textContent = 'PAPER'
 SCISSORS.textContent = 'SCISSORS'
-
 RPS.appendChild(ROCK)
 RPS.appendChild(PAPER)
 RPS.appendChild(SCISSORS)
+
+ROCK.addEventListener('click', () => ScoreKeeper('Rock'))
+PAPER.addEventListener('click', () => ScoreKeeper('Paper'))
+SCISSORS.addEventListener('click', () => ScoreKeeper('Scissors'))
 
 split = document.createElement('div')
 split.appendChild(output)
 RPS.appendChild(split)
 
-COMP_score.innerHTML = 0;
-USER_score.innerHTML = 0;
-
-ROCK.addEventListener('click', () => ScoreKeeper(COMP_score, USER_score, 'Rock'))
-PAPER.addEventListener('click', () => ScoreKeeper(COMP_score, USER_score, 'Paper'))
-SCISSORS.addEventListener('click', () => ScoreKeeper(COMP_score, USER_score, 'Scissors'))
-
 log = document.createElement('p')
-log.innerHTML = (`User Score = ${USER_score.textContent}  \t\t\t\t\t\t Computer Score = ${COMP_score.textContent}`)
 split.appendChild(log)
 
 function getComputerChoice() {
@@ -41,69 +39,30 @@ function getComputerChoice() {
     } 
 }
 
-function ScoreKeeper(COMP_score, USER_score, USERHAND) {
+function ScoreKeeper(USERHAND) {
     let COMPHAND = getComputerChoice();
 
     if (COMPHAND == USERHAND) {
-        output.innerHTML = "They are the same.\nNobody wins"
+        output.innerHTML = "They are the same.<br>Nobody wins</br>"
     } else {
         switch (USERHAND) {
             case 'Rock':
                 (COMPHAND == 'Paper' ? 
-                    (output.innerHTML = "Paper beats Rock.\nComputer wins!", COMP_score.innerHTML+=1 ) : 
-                    (output.innerHTML = "Rock beats Scissors.\nUser wins!", USER_score.innerHTML+=1 ))
+                    (output.innerHTML = "Paper beats Rock.<br>Computer wins!</br>", c_score++ ) : 
+                    (output.innerHTML = "Rock beats Scissors.<br>User wins!</br>", u_score++ ))
                 break;
              case 'Paper':
                 (COMPHAND == 'Rock' ? 
-                    (output.innerHTML = "Paper beats Rock.\nUser wins!", USER_score.innerHTML+=1) : 
-                    (output.innerHTML = "Scissors beats Paper.\nComputer wins!", COMP_score.innerHTML+=1))
+                    (output.innerHTML = "Paper beats Rock.<br>User wins!</br>", u_score++ ) : 
+                    (output.innerHTML = "Scissors beats Paper.<br>Computer wins!</br>", c_score++ ))
                 break;
              case 'Scissors':
                 (COMPHAND == 'Paper' ? 
-                    (output.innerHTML = "Scissors beats Paper.\nUser wins!", USER_score.innerHTML+=1) : 
-                    (output.innerHTML = "Rock beats Scissors.\nComputer wins!", COMP_score.innerHTML+=1))
+                    (output.innerHTML = "Scissors beats Paper.<br>User wins!</br>", u_score++ ) : 
+                    (output.innerHTML = "Rock beats Scissors.<br>Computer wins!</br>", c_score++ ))
                  break;
           }
     }
+    log.innerHTML = (`User Score = ${u_score} <br>Computer Score = ${c_score}</br>`)
+    console.log(u_score)
 }
-
-
-
-/*
-
-let User_score = 0;
-let Comp_score = 0;
-
-User_IP.addEventListener("change", () => {
-    Comp_IP = getComputerChoice();
-    log(`You played ${User_IP.value}`, User_choice);
-    output(`Computer played ${Comp_IP}`, Comp_choice);
-
-    if (User_IP.value == Comp_IP) {
-        output("They are the same.\nNobody wins", result)
-    } else {
-        switch (User_IP.value) {
-            case 'Rock':
-                (Comp_IP == 'Paper' ? 
-                    (output("Paper beats Rock.\nComputer wins!", result), Comp_score++) : 
-                    (output("Rock beats Scissors.\nUser wins!", result), User_score++))
-                break;
-             case 'Paper':
-                (Comp_IP == 'Rock' ? 
-                    (output("Paper beats Rock.\nUser wins!", result), User_score++) : 
-                    (output("Scissors beats Paper.\nComputer wins!", result), Comp_score++))
-                break;
-             case 'Scissors':
-                (Comp_IP == 'Paper' ? 
-                    (output("Scissors beats Paper.\nUser wins!", result), User_score++) : 
-                    (output("Rock beats Scissors.\nComputer wins!", result), Comp_score++) )
-                 break;
-          }
-    }
-    User_IP.value = "";
-    output(`User score:   ${User_score}`, U1);
-    output(`Computer score:   ${Comp_score}`, C1)
-});
-
-
-*/
